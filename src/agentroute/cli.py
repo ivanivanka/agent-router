@@ -851,8 +851,19 @@ def test_command(
 def models_command() -> None:
     """Show configured answer models and their declared agent capabilities."""
     config = load_config()
+    # The command UI can be much wider than the pseudo-terminal supplying its output.
+    table_width = max(console.width, 240)
     table = Table(
-        "Backend", "Tier", "Model", "Tools", "Reasoning", "Vision", "Context", "Price / 1M"
+        "Backend",
+        "Tier",
+        "Model",
+        "Tools",
+        "Reasoning",
+        "Vision",
+        "Context",
+        "Price / 1M",
+        expand=True,
+        width=table_width,
     )
     for backend_name, backend in sorted(config.backends.items()):
         for tier, target in backend.tiers.items():
